@@ -1,3 +1,6 @@
 # WriteUps
 
-Resolución de máquinas de HTB para preparar OSCP y por diversión.
+Resolución de máquinas para preparar OSCP y por diversión.
+
+# Hackthebox
+- [Opensource](https://github.com/0xCOrS/WriteUps).
