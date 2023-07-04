@@ -82,7 +82,9 @@ Using a LFI dictionary obtained online (“https://github.com/carlospolop/Auto_W
 Following information is needed to generate the PIN:
 
 •	username of the user who started this Flask, in this case is ```www-data```
+
 •	modname, in this case is ```flask.app```
+
 •	```getattr(app, '__name__', getattr (app .__ class__, '__name__'))``` in this case is ```wsgi_app```
 
 ![image](https://github.com/0xCOrS/WriteUps/assets/97627828/dcdf0d07-2b1a-44e1-a3a0-3a55553157de)
