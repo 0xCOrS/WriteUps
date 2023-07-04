@@ -60,7 +60,8 @@ Once logged in, I am redirected to “/vault”, where I can add new passwords, 
 
 After adding some passwords, I export everything and among all the generated HTTP requests it points out the one where I download the CSV file.
 
-[Uploading image.png…]()
+![image](https://github.com/0xCOrS/WriteUps/assets/97627828/750e6491-7b05-4f1a-b51b-5c1d493044f4)
+
 
 Using a LFI dictionary obtained online (“https://github.com/carlospolop/Auto_Wordlists/blob/main/wordlists/file_inclusion_linux.txt”) I automate the search, getting a positive result and thus, finding a LFI vulnerability.
 
