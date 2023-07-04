@@ -8,4 +8,4 @@ Resolución de máquinas para preparar OSCP y por diversión. La mayor parte de 
 - [Only4You](https://github.com/0xCOrS/WriteUps/blob/main/only4you.md).
 - [Inject](https://github.com/0xCOrS/WriteUps/blob/main/inject.md).
 - [Timelapse](https://github.com/0xCOrS/WriteUps/blob/main/Timelapse.pdf).
-- [Agile](https://github.com/0xCOrS/WriteUps/blob/main/Agile.pdf).  
+- [Agile](https://github.com/0xCOrS/WriteUps/blob/main/Agile.md).  
