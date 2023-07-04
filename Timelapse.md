@@ -123,7 +123,7 @@ Using those credentials ```Svc_deploy:E3R$Q62^12p7PLlC%KWaxuaV```, it is possibl
 
 ## Privilege Escalation - LAPS_Reader Group
 
-**Vulnerability Explanation**: after logging in as svc_deploy with recently found cleartext creden-tials, it is found that this user is a member of the LAPS_reader group. Members of this group are allowed to access the Local Administrator password from the “ms-mcs-admpwd” attribute of computer’s domain object.
+**Vulnerability Explanation**: after logging in as svc_deploy with recently found cleartext credentials, it is found that this user is a member of the LAPS_reader group. Members of this group are allowed to access the Local Administrator password from the “ms-mcs-admpwd” attribute of computer’s domain object.
 
 **Vulnerability Fix**: securely store credentials.
 
