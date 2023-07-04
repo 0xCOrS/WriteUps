@@ -72,7 +72,9 @@ Inspecting the recently downloaded files, one of them stands out because of the 
 
 ![image](https://github.com/0xCOrS/WriteUps/assets/97627828/f049f4ba-3f61-4c7e-b11a-6e897634caae)
 
-As seen in the picture, ZIP password was recovered, and it is “supremelegacy”. After extracting the file inside the ZIP “legacy_dev_auth.pfx” it is known that it is also password-protected.
+As seen in the picture, ZIP password was recovered, and it is “supremelegacy”. 
+
+After extracting the file inside the ZIP “legacy_dev_auth.pfx” it is known that it is also password-protected.
 
 ![image](https://github.com/0xCOrS/WriteUps/assets/97627828/a023b07c-f783-44ee-8c24-aa7c2d2e5770)
 
