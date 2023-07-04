@@ -222,7 +222,7 @@ As with every new credentials, I try to access via ssh to the machine using them
 
 ![image](https://github.com/0xCOrS/WriteUps/assets/97627828/39bfaeac-dc87-424e-ab9d-f27b99f2a278)
 
-## Privilege Escalation - Insecuro SUDO binary permissions.
+## Privilege Escalation - Insecure SUDO binary permissions.
 
 **Vulnerability Explanation**: After establishing a foothold on target as user “john”, it was checked which commands was possible to run as sudo and found that john is authorized to run “/usr/bin/pip3 download http://127.0.0.1:3000/*.tar.gz” as sudo. As there is a wildcard (*) in the command, it is possible to download any file with extension “.tar.gz” from localhost port 3000. In this port is where the Gogs is running so it is possible to upload a malicious python package to an existing repository that executes the code we want and download it with privileges (thus, ex-ecuting the code with privileges) using the available command.
 
