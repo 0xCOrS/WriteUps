@@ -158,7 +158,7 @@ It is possible to access the target machine vía SSH using those credentials.
 
 ## Privilege Escalation - Sudoedit
 
-Vulnerability Explanation: In Sudo before 1.9.12p2, the sudoedit (aka -e) feature mishandles extra arguments passed in the user-provided environment variables (SUDO_EDITOR, VISUAL, and EDITOR), allowing a local attacker to append arbitrary entries to the list of files to process. This can lead to privilege escalation. Affected versions are 1.8.0 through 1.9.12.p1. The problem exists because a user-specified editor may contain a "--" argument that defeats a protection mechanism, e.g., an EDITOR='vim -- /path/to/extra/file' value (https://nvd.nist.gov/vuln/detail/CVE-2023-22809). 
+**Vulnerability Explanation**: In Sudo before 1.9.12p2, the sudoedit (aka -e) feature mishandles extra arguments passed in the user-provided environment variables (SUDO_EDITOR, VISUAL, and EDITOR), allowing a local attacker to append arbitrary entries to the list of files to process. This can lead to privilege escalation. Affected versions are 1.8.0 through 1.9.12.p1. The problem exists because a user-specified editor may contain a "--" argument that defeats a protection mechanism, e.g., an EDITOR='vim -- /path/to/extra/file' value (https://nvd.nist.gov/vuln/detail/CVE-2023-22809). 
 
 ![image](https://github.com/0xCOrS/WriteUps/assets/97627828/2f7f020d-8ea8-483f-9d66-96c9c18cad52)
 
