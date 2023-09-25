@@ -4,11 +4,11 @@
 
 To begin with, I start scanning all the ports on the target to obtain an overall picture of the target. For this I use following command “sudo nmap -sS --min-rate 10000 -p- monitors2.htb”
 
-![Imagen1](images/Monitors2/Imagen1.png)
+![image](images/Monitors2/Imagen1.png)
 
 Once the open ports are known, It began the service enumeration process. In order to do this, nmap tool was used and, specifically the following command: “sudo nmap -sS -sV -O -oN moni-tors2ServiceVersions p22,80 -Pn monitors2.htb”
 
-![Imagen2](images/Monitors2/Imagen2.png)
+![image](images/Monitors2/Imagen2.png)
 
 ### Port Scan Results
 
