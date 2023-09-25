@@ -109,7 +109,7 @@ Once run, it generates a valid PIN.
 
 ![image](images/Agile/Imagen22.png)
 
-![image](images/Agile/Imagen23.png)
+![image](images/Agile/ImagenSeMEColo.png)
 
 After opening the interactive python console, a reverse connection is established and a shell is opened as ```www-data```
 Once inside the shell, an interesting file is found ```/app/config_prod.json``` that contains valid MySQL credentials ```superpassuser:dSA6l7q*yIVs$39Ml6ywvgK```
