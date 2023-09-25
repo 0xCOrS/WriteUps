@@ -158,11 +158,11 @@ It is possible to access the target machine vía SSH using those credentials.
 
 **Vulnerability Explanation**: In Sudo before 1.9.12p2, the sudoedit (aka -e) feature mishandles extra arguments passed in the user-provided environment variables (SUDO_EDITOR, VISUAL, and EDITOR), allowing a local attacker to append arbitrary entries to the list of files to process. This can lead to privilege escalation. Affected versions are 1.8.0 through 1.9.12.p1. The problem exists because a user-specified editor may contain a "--" argument that defeats a protection mechanism, e.g., an EDITOR='vim -- /path/to/extra/file' value (https://nvd.nist.gov/vuln/detail/CVE-2023-22809). 
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/2f7f020d-8ea8-483f-9d66-96c9c18cad52)
+![image](images/Agile/Imagen35.png)
 
 As it can be seen in the following picture (Illustration 35), user Edwards is able to execute sudoedit as user “dev_admin” to modify two specific files. However, due to **CVE-2023-22809**, it is possible to modify any file as user dev_admin (“https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf”).
  
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/41c48bdc-9a8e-4861-abd3-b20b5fdfb8b5)
+![image](images/Agile/Imagen36.png)
 
 **Vulnerability Fix**: Update Sudo Version to the latest Stable Release 1.9.13p3 (https://www.sudo.ws/).
 
@@ -172,23 +172,23 @@ As it can be seen in the following picture (Illustration 35), user Edwards is ab
 
 Inspecting the running processes, it is possible to observe that there is a cron job that runs ```/bin/bash -c source /app/venv/bin/activate``` regularly as “root”. Checking the file permissions, Group owner is dev_admin.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/c3516a5e-6153-4d6f-bcd0-ed6c2460e633)
+![image](images/Agile/Imagen37.png)
 
 Taking all the previous information into account, we can modify the file ```/app/venv/bin/activate``` as user dev_admin and then wait until the cron job executes the file with root privileges. Steps as follows:
 
 1.	Set the environment variable EDITOR adding the extra file to modify.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/bb7aa766-d994-4477-8e53-e07e81dec252)
+![image](images/Agile/Imagen38.png)
 
 2.	Modify (as user dev_admin) the contents of ```/app/venv/bin/activate``` through execution of ```sudoedit -u dev_admin /app/config_test.json``` and adding a python reverse shell.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/4cf01c6a-4d6c-4c62-b11f-5a951b2cd0c4)
+![image](images/Agile/Imagen39.png)
 
 3.	Set a listener on local port 444 and wait until the cron job executes the modified file.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/2183b533-f77e-4a22-b61a-7d356c5aa713)
+![image](images/Agile/Imagen40.png)
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/1d44cefc-a358-4cbc-9e83-4bfef9e55cf7)
+
 
 
 
