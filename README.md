@@ -1,6 +1,6 @@
 # WriteUps
 
-Resolución de máquinas para preparar OSCP y por diversión. La mayor parte de WriteUps están en Inglés. 
+Resolución de máquinas para preparar OSCP. 
 
 # Hackthebox
 - [Monitors2](https://github.com/0xCOrS/WriteUps/blob/main/Monitors2.md).
