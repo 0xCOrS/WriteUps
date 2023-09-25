@@ -4,7 +4,7 @@
 
 To begin with, I start scanning all the ports on the target to obtain an overall picture of the target. For this I use following command ```sudo nmap -sS -p- --min-rate 10000 -v agile.htb```
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/83658941-63b9-4894-af8e-371974d705a3)
+![Imagen1](https://github.com/0xCOrS/WriteUps/assets/97627828/ae2dac44-0f66-4b5b-947c-3dee1988cf60)
 
 New scan is made adding the -Pn flag to treat the host as if it was up ```sudo nmap -Pn -p- --min-rate 10000 agile.htb```
 
