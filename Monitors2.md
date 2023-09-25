@@ -12,7 +12,7 @@ Once the open ports are known, It began the service enumeration process. In orde
 
 ### Port Scan Results
 
-
+![image](images/Monitors2/PortScan.PNG)
 
 ### HTTP Enumeration
 
@@ -88,7 +88,7 @@ Once on the attacking machine, inspecting the contents, password hashes are foun
 
 ![image](images/Monitors2/Imagen12.png)
 
-METER FOTO HASHES
+![imagen](images/Monitors2/hashes.PNG)
 
 “Admin” and “Marcus” hashes are “bcrypt $2*$, Blowfish” type of hash.
 
