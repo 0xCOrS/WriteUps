@@ -107,7 +107,7 @@ openssl pkcs12 -in ../lega*pfx -out timelapse-legacy.key.pem -nocerts -nodes
 
 4.	Using the recently obtained files, authenticate using ```evil-winrm -i 10.10.11.152 -c Dev/certs/timelapse-legacy.cert.pem -k Dev/certs/timelapse-legacy.key.pem -u legacyy -S```
 
-![image](images/Timelapse/Imagen16.pnge)
+![image](images/Timelapse/Imagen16.png)
 
 5.	Grab “C.\Users\Legacyy\Desktop\User.txt”
 
