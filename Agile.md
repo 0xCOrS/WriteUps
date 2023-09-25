@@ -8,15 +8,15 @@ To begin with, I start scanning all the ports on the target to obtain an overall
 
 New scan is made adding the -Pn flag to treat the host as if it was up ```sudo nmap -Pn -p- --min-rate 10000 agile.htb```
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/a0b05ef3-6c03-49a7-959a-9250f86e8793)
+![image](images/Imagen2.png)
 
 Once the open ports are known, I began the service enumeration process. To do this the follow-ing command was used ```sudo nmap -sS p22,80 -sV -O agile.htb```
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/7477eab1-7712-4b50-bb40-82e179de733b)
+![image](images/Imagen3.png)
 
 ### Port Scan Results
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/c46d1b86-04f5-4946-8327-7236fc598d4b)
+![image](images/Imagen4.png)
 
 ### HTTP Enumeration
 
