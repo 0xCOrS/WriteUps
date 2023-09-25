@@ -114,41 +114,41 @@ Once run, it generates a valid PIN.
 After opening the interactive python console, a reverse connection is established and a shell is opened as ```www-data```
 Once inside the shell, an interesting file is found ```/app/config_prod.json``` that contains valid MySQL credentials ```superpassuser:dSA6l7q*yIVs$39Ml6ywvgK```
 
-![image](images/Agile/Imagen24.png)
+![image](images/Agile/Imagen23.png)
 
 Using those credentials, it is possible to access MySQL database where the vaults of other users of the “Superpass Password Manager” are stored. One of the vaults belongs to user “corum” and contains his credentials for “agile” ```corum: 5db7caa1d13cc37c9fc2```
 
-![image](images/Agile/Imagen25.png)
+![image](images/Agile/Imagen24.png)
 
 It is possible to authenticate as user “corum” and open a new shell, accessing “user.txt”.
 
-![image](images/Agile/Imagen26.png)
+![image](images/Agile/Imagen25.png)
 
 Once identified as “corum”, inspecting the output of ```ps -ef``` it is found that there are two instances of the application running simultaneously: “wsgi-dev” and “wsgi”.
 
-![image](images/Agile/Imagen27.png)
+![image](images/Agile/Imagen26.png)
 
 What it is occurring on the server is a constant testing of “wsgi-dev” app (located in ```/app/app-testing/wsgi-dev.py```) in order to update “wsgi” app (located in ```/app/app/wsgi.py```). This can be checked inspecting ```/app/test_and_update.sh```
 
-![image](images/Agile/Imagen28.png)
+![image](images/Agile/Imagen27.png)
 
 Checking the available test file found in ```/app/app-testing/tests/functional/test_site_interactively.py``` and current running processes it is found that Chrome is running to debug interactively the app using the remote debug-ging port “41829”. 
 
-![image](images/Agile/Imagen29.png)
+![image](images/Agile/Imagen28.png)
 
-![image](images/Agile/Imagen30.png)
+![image](images/Agile/Imagen29.png)
 
 With this information, chisel is used to establish a tunnel and to interact with the Debugging Instance (running on the target) in my local Chromium browser. For this, a Basic Server Listener is started in my machine on port 8888 (accepting reverse tunnels) which is connected from the target and then a tunnel pointing to the remote debugging port (41829) is established.
 
-![image](images/Agile/Imagen31.png)
+![image](images/Agile/Imagen30.png)
 
 After this, the debugging instance can be accessed using “Chromium”.
 
-![image](images/Agile/Imagen32.png)
+![image](images/Agile/Imagen31.png)
 
 Once here, valid credentials for user “Edwards” ```edwards:d07867c6267dcb5df0af``` are found as his Vault is opened in the Debugging Instance.
 
-![image](images/Agile/Imagen33.png)
+![image](images/Agile/Imagen32.png)
 
 It is possible to access the target machine vía SSH using those credentials.
 
