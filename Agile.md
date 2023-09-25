@@ -152,7 +152,7 @@ Once here, valid credentials for user “Edwards” ```edwards:d07867c6267dcb5df
 
 It is possible to access the target machine vía SSH using those credentials.
 
-![image](https://github.com/0xCOrS/WriteUps/assets/97627828/80bb7e62-817a-467f-9686-f4265fc6718b)
+![image](images/Agile/Imagen33.png)
 
 ## Privilege Escalation - Sudoedit
 
