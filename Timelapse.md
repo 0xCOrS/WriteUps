@@ -137,7 +137,7 @@ As shown in the previous picture, credentials are recovered ```Yln0l#3M+,705uQP9
 
 After that, login as Administrator and grab the flag.
 
-![image](images/Timelapse/Imagen20.png)
+
 
 
 
