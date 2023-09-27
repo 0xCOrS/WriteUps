@@ -69,7 +69,7 @@ Content of user.txt is:
 
 ### 4.1.3 Post-Exploitation
 
-After accessing user.txt, all users are listed using ```crackmapexec smb 10.10.10.100 -u SVC_TGS -p ‘GPPstillStandingStrong2k18’ –users ```
+After accessing user.txt, all users are listed using ```crackmapexec smb 10.10.10.100 -u SVC_TGS -p ‘GPP**********18’ –users ```
  
 ![image](images/Active/Imagen10.png)
 
@@ -85,7 +85,7 @@ Severity: Critical
 
 Steps to reproduce the attack:
 
-- First step is to retrieve TGS, for this Impacket-GetUserSPNs will be used. Command is “impacket-GetUserSPNs active.htb/SVC_TGS:GPPstillStandingStrong2k18 -outputfile hashesKerbeRoastActive”.
+- First step is to retrieve TGS, for this Impacket-GetUserSPNs will be used. Command is “impacket-GetUserSPNs active.htb/SVC_TGS:GPP**********18 -outputfile hashesKerbeRoastActive”.
  
 ![image](images/Active/Imagen11.png)
 
