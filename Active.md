@@ -1,6 +1,6 @@
 # Active – 10.10.10.100
 
-To begin with, a Nmap scan will be issued to obtain all the open TCP ports on the target. Following command is used “sudo nmap -sS -p- --min-rate 1000 -oN activePortScan ac-tive.htb”.
+To begin with, a Nmap scan will be issued to obtain all the open TCP ports on the target. Following command is used “sudo nmap -sS -p- --min-rate 1000 -oN activePortScan active.htb”.
  
 ![image](images/Active/Imagen1.png)
 
@@ -8,13 +8,13 @@ To begin with, a Nmap scan will be issued to obtain all the open TCP ports on th
 
 Once the open ports are known, the services enumeration process begins. In order to do this, Nmap tool is used and, specifically the following command: “sudo nmap -sS -sV -O -sC -p53,88,135,139,389,445,464,593,636,3268,3269,5722,9389,47001 -oN activeServiceVer-sionScan active.htb
  
-Illustration 2 Service versions
+![image](images/Active/Imagen2.png)
 
 ### SMB Enumeration
 
 SMB enumeration was made using enum4linux initially with the following command: “enum4linux -a 10.10.10.100”
 
-Illustration 4 SMB enumeration with null session.
+![image](images/Active/Imagen3.png)
 
 As seen in the previous picture, null sessions are possible and it was possible to list all the shares and which permissions do I have (as an anonymous user) over them.
 
@@ -22,23 +22,24 @@ As I only have listing permissions over Replication share, this will be the star
 
 Next step is to spider the Replication share using as pattern “.”. A s shown on the next pic-ture, plenty of files were found.
  
-Illustration 5 Spidering Replication share wit "." pattern.
+![image](images/Active/Imagen4.png)
 
 To easily search through the files, I download all of them using following “SMBCLIENT” commands:
 
+```
 smbclient //10.10.10.100 /Replication
 mask ""
 recurse
 prompt
 mget *
-
-Illustration 6 Downloading all the Replication share.
+```
+![image](images/Active/Imagen5.png)
 
 Inspecting the recently downloaded files, “Group.xml” is found.
 
-As it can be read here, Groups.xml contains the AES encrypted password for certain users (SVC_TGS in this case). The tricky point is that the AES key used by Microsoft to encrypt the password, was made public (unknown reason) and now it is possible to obtain the cleartext credentials.
- 
-Illustration 7 groups.xml content.
+As it can be read [here](https://adsecurity.org/?p=2288), *Groups.xml* contains the AES encrypted password for certain users (SVC_TGS in this case). The tricky point is that the AES key used by Microsoft to encrypt the password, was made public (unknown reason) and now it is possible to obtain the cleartext credentials.
+
+![image](images/Active/Imagen6.png)
 
 ## 4.1.2 Initial Access – Group Policy Preference Cached Password.
 
@@ -54,13 +55,13 @@ Steps to reproduce the attack:
 
 - Using Gpp-Decrypt (obtained from here) extract cleartext password.
  
-Illustration 8 'cpassword' cracking with GPPDecrypt
+![image](images/Active/Imagen7.png)
 
 - Password for user SVC_TGS is “GPPstillStandingStrong2k18”
 
 - After this, it is possible to access SMB as user SVC_TGS and get the user.txt file.
  
-Illustration 9 User.txt found
+![image](images/Active/Imagen8.png)
 
 Content of user.txt is:
  
@@ -70,7 +71,7 @@ Illustration 10 User.txt
 
 After accessing user.txt, all users are listed using “crackmapexec smb 10.10.10.100 -u SVC_TGS -p ‘GPPstillStandingStrong2k18’ –users”
  
-Illustration 11 SMB user listing
+![image](images/Active/Imagen9.png)
 
 Seeing this short user-list, next step is to continue with Kerberos.
 
@@ -86,24 +87,24 @@ Steps to reproduce the attack:
 
 - First step is to retrieve TGS, for this Impacket-GetUserSPNs will be used. Command is “impacket-GetUserSPNs active.htb/SVC_TGS:GPPstillStandingStrong2k18 -outputfile hashesKerbeRoastActive”.
  
-Illustration 12 Kerberoasting
+![image](images/Active/Imagen10.png)
 
 - As seen in the picture, a TGS for user Administrator is retrieved.
 
 -	Content of the hasheKerbeRoastActive is:
  
-Illustration 13 Recovered Administrator TGS.
+![image](images/Active/Imagen11.png)
 
 - To crack the TGS and obtain the password, hascat will be used. Command is “.\hashcat -m 13100 --force -a 0 hashesKerbeRoastActive rockyou.txt”
  
-Illustration 14 Administrator Password recovered.
+![image](images/Active/Imagen12.png)
 
 - Administrator password is recovered: “Ticketmaster1968”
 
 - Now it is possible to execute commands on the DC.
  
-Illustration 15 Command execution achieved.
+![image](images/Active/Imagen13.png)
 
 Screenshot:
  
-Illustration 16 Root.txt
+![image](images/Active/Imagen14.png)
