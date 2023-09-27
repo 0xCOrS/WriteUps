@@ -8,3 +8,4 @@ Resolución de máquinas para preparar OSCP.
 - [Inject](https://github.com/0xCOrS/WriteUps/blob/main/inject.md).
 - [Timelapse](https://github.com/0xCOrS/WriteUps/blob/main/Timelapse.md).
 - [Agile](https://github.com/0xCOrS/WriteUps/blob/main/Agile.md).  
+- [Agile](https://github.com/0xCOrS/WriteUps/blob/main/Active.md).  
