@@ -78,8 +78,11 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 ## Initial Access – Command Injection
 
 **Vulnerability Explanation**: misconfigured Spring Boot application that exposes other users’ session cookies has a insecure function “/executessh” where it is possible to inject com-mands to open a reverse shell.
+
 **Vulnerability Fix**: securely store session cookies and correctly sanitize user input on “/executessh” function.
+
 **Severity**: Critical
+
 **Steps to reproduce the attack**: 
 
 •	Access “/actuator/sessions” and grab session cookie for user “kanderson”.
@@ -123,9 +126,13 @@ Once this password is recovered, it is possible to access the target machine thr
 ## Privilege Escalation – Insecure Sudo Permissions
 
 **Vulnerability Explanation**: After establishing a foothold on target, Cosme noticed that the user has permissions to execute “ssh *” as a super user. This configuration let a user with-out privileges spawn a root shell.
+
 **Vulnerability Fix**: avoid using wildcards when establishing the sudo permissions for a user.
+
 **Severity**: Critical
+
 **Steps to reproduce the attack**: execute “sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x”
+
 **Screenshot**:
  
 ![image](images/Cozyhosting/Imagen27.png)
