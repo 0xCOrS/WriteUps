@@ -77,15 +77,15 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 
 ## Initial Access – Command Injection
 
-**Vulnerability Explanation**: misconfigured Spring Boot application that exposes other users’ session cookies has a insecure function “/executessh” where it is possible to inject commands to open a reverse shell.
+**Vulnerability Explanation**: misconfigured Spring Boot application that exposes other users’ session cookies has a insecure function ```/executessh``` where it is possible to inject commands to open a reverse shell.
 
-**Vulnerability Fix**: securely store session cookies and correctly sanitize user input on “/executessh” function.
+**Vulnerability Fix**: securely store session cookies and correctly sanitize user input on ```/executessh``` function.
 
 **Severity**: Critical
 
 **Steps to reproduce the attack**: 
 
-•	Access “/actuator/sessions” and grab session cookie for user “kanderson”.
+•	Access ```/actuator/sessions``` and grab session cookie for user ```kanderson```.
 
 •	Setup a listener on port 444.
 
@@ -102,11 +102,11 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 
 ## Post Exploitation.
 
-After gaining initial access, a veri interesting file is  found called “cloudhosting-0.0.1.jar”
+After gaining initial access, a very interesting file is  found called ```cloudhosting-0.0.1.jar```
  
 ![image](images/Cozyhosting/Imagen21.png)
 
-After downloading the file and manually inspecting it, some credentials for PostgreQL data-base are found inside a file called “application.properties”.
+After downloading the file and manually inspecting it, some credentials for PostgreQL data-base are found inside a file called ```application.properties```.
  
 ![image](images/Cozyhosting/Imagen22.png)
 
@@ -134,7 +134,7 @@ Once this password is recovered, it is possible to access the target machine thr
 
 **Severity**: Critical
 
-**Steps to reproduce the attack**: execute “sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x”
+**Steps to reproduce the attack**: execute ```sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x```
 
 **Screenshot**:
  
