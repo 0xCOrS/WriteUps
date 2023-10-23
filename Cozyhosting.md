@@ -2,7 +2,7 @@
 
 ## Service Enumeration
 
-Once the open ports are known, the services enumeration process begins. In order to do this, Nmap tool is used and, specifically the following command: “sudo nmap -sS -p22,80 -sV -O -sC cozyhosting.htb”
+Once the open ports are known, the services enumeration process begins. In order to do this, Nmap tool is used and, specifically the following command: ```sudo nmap -sS -p22,80 -sV -O -sC cozyhosting.htb``` 
  
 ![image](images/Cozyhosting/Imagen2.png)
 
