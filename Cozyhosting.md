@@ -48,7 +48,7 @@ Looking through the Admin dashboard, there is an interesting functionality that 
  
 ![image](images/Cozyhosting/Imagen11.png)
 
-Inserting two random values as ```hostname=localhost&username=kanderson``` generates a POST request to ```/executessh``` that results in a “Host key verification failed” error.
+Inserting two random values as ```hostname=localhost``` and ```username=kanderson``` generates a POST request to ```/executessh``` that results in a “Host key verification failed” error.
  
 ![image](images/Cozyhosting/Imagen12.png)
  
