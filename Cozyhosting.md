@@ -54,9 +54,9 @@ Inserting two random values as ```hostname=localhost``` and ```username=kanderso
  
 ![image](images/Cozyhosting/Imagen13.png)
 
-The way the errors are thrown are suspicious as it seems to be the output of a shell com-mand. In order to generate more errors, I inserted some special characters to see if it is possible to inject some commands.
+The way the errors are thrown are suspicious as it seems to be the output of a shell command. In order to generate more errors, I inserted some special characters to see if it is possible to inject some commands.
 
-The error shown after inserting ```hostname=localhost&username=hello;id;```, was a clear indication that host may be vulnerable to command injection.
+The error shown after inserting ```hostname=localhost```and ```username=hello;id;```, was a clear indication that host may be vulnerable to command injection.
  
 ![image](images/Cozyhosting/Imagen14.png)
  
