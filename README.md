@@ -10,3 +10,4 @@ Resolución de máquinas para preparar OSCP.
 - [Agile](https://github.com/0xCOrS/WriteUps/blob/main/Agile.md).  
 - [Active](https://github.com/0xCOrS/WriteUps/blob/main/Active.md).
 - [Cozyhosting](https://github.com/0xCOrS/WriteUps/blob/main/Cozyhosting.md).
+- [Monteverde](https://github.com/0xCOrS/WriteUps/blob/main/Monteverde.md).
