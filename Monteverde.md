@@ -55,7 +55,7 @@ As it is shown in the picture, the password is user’s ```mhope``` domain passw
 After getting Domain credentials is useful to perform LDAP authenticated enumeration us-ing python. My main goal now is to obtain more info about user ```mhope``` (who is not allowed to authenticate via LDAP).
 
 ```
-import ldap3
+>>>import ldap3
 >>>server=ldap3.Server(’10.10.10.172’, get_info=ldap3.ALL, port=389, use_ssl= False)
 
 >>>connection=ldap3.Connection(server, 'SABatchJobs', 'SABatchJobs')
