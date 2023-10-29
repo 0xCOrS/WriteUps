@@ -40,7 +40,7 @@ Using the newly found set of credentials I will spider all the shares looking fo
  
 ![image](images/Monteverde/Imagen7.png)
 
-One file is found “azure.xml”. After downloading it using smbclient, I check its contents.
+One file is found ```azure.xml```. After downloading it using smbclient, I check its contents.
  
 ![image](images/Monteverde/Imagen8.png)
 
@@ -52,7 +52,7 @@ As it is shown in the picture, the password is user’s ```mhope``` domain passw
 
 ### LDAP Enumeration
 
-After getting Domain credentials is useful to perform LDAP authenticated enumeration us-ing python. My main goal now is to obtain more info about user “mhope” (who is not allowed to authenticate via LDAP).
+After getting Domain credentials is useful to perform LDAP authenticated enumeration us-ing python. My main goal now is to obtain more info about user ```mhope``` (who is not allowed to authenticate via LDAP).
 
 ```
 import ldap3
@@ -85,11 +85,11 @@ Now that naming context is known, more info can be extracted.
 ```
 ![image](images/Monteverde/Imagen12.png)
 
-Now we know that user “mhope” is a member of the Security Groups “Azure Admins” and “Remote Management Users”. As a result of the second membership, he can access the domain controller through “WinRM”.
+Now we know that user ```mhope``` is a member of the Security Groups ```Azure Admins``` and ```Remote Management Users```. As a result of the second membership, he can access the domain controller through ```WinRM```.
 
 ## Initial Access – Insecure Credentials
 
-**Vulnerability Explanation**: after enumerating domain users through SMB using a null ses-sion, it was found that user’s “SABatchJobs” password was equal to the username. Using these credentials, it was possible to find a file stored on another user’s personal directory that contained another password. After performing a Password Spraying Attack, it was found that this password was user’s “mhope” domain password.
+**Vulnerability Explanation**: after enumerating domain users through SMB using a null ses-sion, it was found that user’s ```SABatchJobs``` password was equal to the username. Using these credentials, it was possible to find a file stored on another user’s personal directory that contained another password. After performing a Password Spraying Attack, it was found that this password was user’s ```mhope``` domain password.
 
 **Vulnerability Fix**: avoid using the same username as password. Avoid storing publicly readable files containing cleartext passwords.
 
@@ -120,13 +120,13 @@ In order to allow Active Directory users to authenticate using AD credentials an
 
 Here, the first one is being used.
 
-By default, “MSOL[hex_value]” user is the one that takes care of Active Directory to Azure replication. To support the synchronization service, metadata and configuration data is stored (parts of the data are encrypted using ```mcrypt.dll```) on the MSSQL database that by default is created when the Azure connector is deployed onto a host. Among that data is “MSOL_[hex]” user password’s hash. In this case “mhope” as a member of "Azure Admins” can access the MSSQL database.
+By default, ```MSOL[hex_value]``` user is the one that takes care of Active Directory to Azure replication. To support the synchronization service, metadata and configuration data is stored (parts of the data are encrypted using ```mcrypt.dll```) on the MSSQL database that by default is created when the Azure connector is deployed onto a host. Among that data is ```MSOL_[hex]``` user password’s hash. In this case “mhope” as a member of "Azure Admins” can access the MSSQL database.
 
 A PowerShell PoC that uses the before mentioned DLL can be found ![here](https://github.com/Hackplayers/PsCabesha-tools/blob/master/Privesc/Azure-ADConnect.ps1). Using this poc script is possible to retrieve the stored cleartext domain, username and password.
 
 ## Privilege Escalation – Misconfigured Azure AD Connect
 
-**Vulnerability Explanation**: a deeper explanation can be found in the previous section 4.1.3 Post-Exploitation. The user whose credentials are used to synchronize AD with Azure AD is “Administrator”. Then, once these credentials are retrieved using the above mentioned PoC, Domain Administrator account is compromised.
+**Vulnerability Explanation**: a deeper explanation can be found in the previous section Post-Exploitation. The user whose credentials are used to synchronize AD with Azure AD is ```Administrator```. Then, once these credentials are retrieved using the above mentioned PoC, Domain Administrator account is compromised.
 
 **Vulnerability Fix**: never use an Administrator account to perform this task as Administrative privileges are not required.
 
